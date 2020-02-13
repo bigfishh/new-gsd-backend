@@ -13,4 +13,9 @@ social = Category.create(name: "Social")
 work = Category.create(name: "Work")
 
 annieTask = TodoTask.create(user: annie, title: "get food", description: "lunch with Jessie", completed: false, category: social)
+annieTask2 = TodoTask.create(user: annie, title: "going to the movies", description: "watch Little Women with Anna", completed: true, category: social)
+annieTask3 = TodoTask.create(user: annie, title: "finish first draft", description: "finish first draft of upcoming blog", completed: false, category: work)
+
+
+
 alexTask = TodoTask.create(user: alex, title: "project", description: "build out design", completed: true, category: work)

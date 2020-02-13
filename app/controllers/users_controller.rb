@@ -1,10 +1,11 @@
 class UsersController < ApplicationController
     before_action :authorized, only: [:persist]
+
     def index
         @users = User.all  
         render json: @users
     end 
-  
+
     def show
         @user = User.find(params[:id])
         render json: {user: UserSerializer.new(@user)}
@@ -15,29 +16,29 @@ class UsersController < ApplicationController
         # byebug
         if @user.valid?
             wristband = encode_token({user_id: @user.id})
-            render json: {user: UserSerializer.new(@user), token: wristband}
+            render json: {user: UserSerializer.new(@user), token: wristband}, status: :created
         else
-            render json: {error: "Try again"}
+            render json: {error: "Try again"}, status: :not_acceptable
         end
     end
 
     def login
         @user = User.find_by(username: params[:username])
         if @user && @user.authenticate(params[:password])
-          wristband = encode_token({user_id: @user.id})
-          render json: {user: UserSerializer.new(@user), token: wristband}
+            wristband = encode_token({user_id: @user.id})
+            render json: {user: UserSerializer.new(@user), token: wristband}
         else
-          render json: {error: "Invalid username or password"}
+            render json: {error: "Invalid username or password"}
         end
     end
 
     def persist
         wristband = encode_token({user_id: @user.id})
         render json: {user: UserSerializer.new(@user), token: wristband}
-      end
+    end
 
     private
     def user_params
-        params.permit(:name, :username, :password, :bio, :img_url)
+        params.permit(:username, :password, :bio, :img_url)
     end
 end
