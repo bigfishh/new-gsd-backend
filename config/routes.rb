@@ -1,8 +1,8 @@
 Rails.application.routes.draw do
 
-  resources :todo_tasks
   resources :categories, only: [:show, :index]
-  resources :users, only: [:index, :show, :create]
+  resources :users, only: [:index, :show, :create] 
+  resources :todo_tasks
 
   post '/login', to: "users#login"
   get  '/persist', to: "users#persist"
